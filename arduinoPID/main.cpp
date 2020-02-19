@@ -1,5 +1,5 @@
 #include "pidcntl.h"
-#include <TimerFive.h>
+#include "TimerFive.h"
 
 #define EC_CHA 3  //모터B 채널 A 핀
 #define EC_CHB 49  //모터B 채널 B 핀
@@ -19,36 +19,37 @@
 #define MA_DIR2 34 //모터B 방향2 핀
 #define MA_PWM 12  //PWM
 
+
 void setup() {
-    Serial.begin(9600);
+  Serial.begin(9600);
 
-    MOTR A(EA_CHA, EA_CHB, MA_DIR1, MA_DIR2, MA_PWM);
-    MOTR B(EB_CHA, EB_CHB, MB_DIR1, MB_DIR2, MB_PWM);
-    MOTR C(EC_CHA, EC_CHB, MC_DIR1, MC_DIR2, MC_PWM);
+  MOTR A(EA_CHA, EA_CHB, MA_DIR1, MA_DIR2, MA_PWM);
+  MOTR B(EB_CHA, EB_CHB, MB_DIR1, MB_DIR2, MB_PWM);
+  MOTR C(EC_CHA, EC_CHB, MC_DIR1, MC_DIR2, MC_PWM);
 
-    A.setPID(0.5, 0.1, 3.5);
-    B.setPID(0.43, 0.15, 3.5);
-    C.setPID(1, 0.5, 0.6);
+  A.setPID(0.5, 0.1, 3.5);
+  B.setPID(0.43, 0.15, 3.5);
+  C.setPID(1, 0.5, 0.6);
 
-    attachInterrupt(digitalPinToInterrupt(A.pChA), A.Encoder, A.CHANGE);
-    attachInterrupt(digitalPinToInterrupt(B.pChA), B.Encoder, B.CHANGE);
-    attachInterrupt(digitalPinToInterrupt(C.pChA), C.Encoder, C.CHANGE);
+  attachInterrupt(digitalPinToInterrupt(A.pin()), (void*)&MOTR::Encoder, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(B.pin()), (void*)&MOTR::Encoder, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(C.pin()), (void*)&MOTR::Encoder, CHANGE);
 
-    Timer5.attachInterrupt(getSpeed);
-    Timer5.initialize(100000); // 타이머 주기 설정
+  Timer5.attachInterrupt(getSpeed);
+  Timer5.initialize(100000); // 타이머 주기 설정
 
 }
 
 void loop() {
-    A.revolving(FWARD, 100);
-    B.revolving(BACKWARO, 100);
-    delay(1000);
-    A.revolving(FWARD, 0);
-    B.revolving(FWARD, 0);
-    delay(1000);
+  A.revolving(FWARD, 100);
+  B.revolving(BACKWARO, 100);
+  delay(1000);
+  A.revolving(FWARD, 0);
+  B.revolving(FWARD, 0);
+  delay(1000);
 }
 
-void getSpeed(){
+void getSpeed() {
   A.getSpd();
   B.getSpd();
   C.getSpd();
