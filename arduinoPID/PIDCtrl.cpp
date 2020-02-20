@@ -1,4 +1,5 @@
 #include "pidcntl.h"
+#include <Arduino.h>
 
 MOTR::MOTR(){
     err = 0;
@@ -32,8 +33,6 @@ void MOTR::setup(PinNum _nChA, PinNum _nChB, PinNum _nDIR1, PinNum _nDIR2, PinNu
 
     //해결해야할 부분.
     // 따로 빼내자.
-    attachInterrupt(digitalPinToInterrupt(pChA), Encoder, CHANGE);
-    Timer5.attachInterrupt(getSpd);
 }
 
 //Setting PID value
@@ -82,5 +81,5 @@ void MOTR::revolving(bool direction, int spd){
 
     digitalWrite(pDIR1, direction);
     digitalWrite(pDIR2, !direction);
-    analogWrite(nPWM, speed);
+    analogWrite(pPWM, speed);
 }

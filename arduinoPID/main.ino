@@ -48,7 +48,7 @@ void loop() {
 }
 
 void getSpeed() {
-  A.getSpd();
-  B.getSpd();
-  C.getSpd();
+  A.GetSpd();
+  B.GetSpd();
+  C.GetSpd();
 }

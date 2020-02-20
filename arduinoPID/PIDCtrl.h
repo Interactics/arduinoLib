@@ -36,12 +36,14 @@ public:
     ~MOTR();
 
     PinNum pin() { return pChA; }
-
+    
+    int PID(const double target, const double now);
     void setup(PinNum nPin, PinNum nCh, PinNum nDIR1, PinNum nDIR2, PinNum nPWM);
     void setPID(double P, double I, double D);
+    void move(double targetSpd);
+    void GetSpd();
     void Encoder();
     void revolving(bool direction, int spd); 
 
-    int getSpd();
 };
 #endif
