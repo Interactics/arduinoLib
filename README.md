@@ -8,3 +8,7 @@ DC Motor PID control code
 ### PID_BADA_version
 
 This code is made for BADA motor control using arduino EVERY NANO
+
+## ArduinoTxRxRead
+
+Code for Packet Transmission and Reception
